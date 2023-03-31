@@ -5,7 +5,7 @@ const CreateError = require('http-errors');
 
 const User = require('../app/models/User.model');
 const { userValidate } = require('../helpers/validation');
-const { signAccessToken } = require('../helpers/jwt_service');
+const { signAccessToken, verifyAccessToken } = require('../helpers/jwt_service');
 
 router.post('/register', async (req, res, next) => {
     try {
@@ -60,6 +60,17 @@ router.post('/login', async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+});
+router.get('/get_lists', verifyAccessToken, (req, res, next) => {
+    const list = [
+        {
+            email: 'hello1@gmail.com',
+        },
+        {
+            email: 'hello2@gmail.com',
+        },
+    ];
+    res.json({ list });
 });
 
 router.get('/', function (req, res) {
