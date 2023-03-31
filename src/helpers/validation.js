@@ -1,19 +1,23 @@
-const Joi = require("joi");
+const Joi = require('joi');
 
 const userValidate = (data) => {
-  //Định nghĩa dữ liệu đưa vào
-  const userSchema = Joi.object({
-    email: Joi.string()
-      .email()
-      .pattern(new RegExp("gmail.com"))
-      .lowercase()
-      .required(),
-    password: Joi.string().min(4).max(32).required(),
-  });
-  //validate
-  return userSchema.validate(data);
+    //Định nghĩa dữ liệu đưa vào
+    const userSchema = Joi.object({
+        email: Joi.string().email().pattern(new RegExp('gmail.com')).lowercase().required(),
+        password: Joi.string().min(4).max(32).required(),
+    });
+    //validate
+    return userSchema.validate(data);
 };
 
 module.exports = { userValidate };
 
-// Nếu dữ liệu không hợp lệ, validate sẽ trả về một đối tượng với hai thuộc tính value (giá trị null) và error (một đối tượng lỗi mô tả lỗi của dữ liệu không hợp lệ).
+//valid: trả về object <=> { value: { email: 'lu12345@gmail.com', password: '123456' } }
+//invalid
+// {
+//   value: { email: 'lu12345@gmail.coms', password: '123456' },
+//   error: [Error [ValidationError]: "email" must be a valid email] {
+//     _original: { email: 'lu12345@gmail.coms', password: '123456' },
+//     details: [ [Object] ]...
+//   }
+// }

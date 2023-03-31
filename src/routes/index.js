@@ -9,7 +9,7 @@ function route(app) {
     app.use((req, res, next) => {
         next(createError.NotFound('This page does not exist'));
     });
-    //nếu có lỗi sẽ tới hàm này và xử lý
+    //nếu có lỗi sẽ tới hàm này và xử lý, 500 err syntax
     app.use((error, req, res, next) => {
         res.json({
             status: error.status || 500,

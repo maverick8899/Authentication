@@ -12,18 +12,19 @@ const UserSchema = new Schema({
 //trước khi save
 UserSchema.pre('save', async function (next) {
     try {
-        const salt = await bcrypt.genSalt(10);
-        const hashPassword = await bcrypt.hash(this.password, salt);
+        const hashPassword = await bcrypt.hash(this.password, 10);
         this.password = hashPassword;
-        next();
-        console.log(`Called before save ::: ${this.email} ${this.password}`);
+        next(); //next là hàm async
+        console.log(`11111Called before save ::: ${this.email} ${this.password}`);
     } catch (error) {
         next(error);
     }
 });
 
 //thêm method cho documents
+//truyền password từ body(POST) và this.password từ user tìm thấy từ query
 UserSchema.methods.isCheckPassword = async function (password) {
+    //encrypted =decoded
     return await bcrypt.compare(password, this.password);
 };
 

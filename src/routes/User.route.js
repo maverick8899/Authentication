@@ -5,13 +5,13 @@ const CreateError = require('http-errors');
 
 const User = require('../app/models/User.model');
 const { userValidate } = require('../helpers/validation');
-const { signAccessToken, verifyAccessToken } = require('../helpers/jwt_service');
+const { signAccessToken, verifyAccessToken, signReFreshToken } = require('../helpers/jwt_service');
 
 router.post('/register', async (req, res, next) => {
     try {
         const { email, password } = req.body;
-        const { error } = userValidate(req.body);
 
+        const { error } = userValidate(req.body);
         if (error) {
             throw CreateError(error.details[0].message);
         }
@@ -55,8 +55,9 @@ router.post('/login', async (req, res, next) => {
         }
         //Create Access_Token
         const accessToken = await signAccessToken(user._id);
+        const refreshToken = await signReFreshToken(user._id);
 
-        res.json({ accessToken });
+        res.json({ accessToken, refreshToken });
     } catch (error) {
         next(error);
     }
