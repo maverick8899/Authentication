@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 mongoose.set("strictQuery", true); //bật chế độ kiểm tra,đọc zalo mongoDB
 
+//trả về một đối tượng Connection của Mongoose.
 const connect = mongoose.createConnection("mongodb://127.0.0.1:27017/TipJS");
 
 connect.on("connected", function (error) {
@@ -16,7 +17,7 @@ connect.on("disconnected", function (error) {
 });
 
 connect.on("error", function (error) {
-  console.log(`mongoDB ::: Connected ::: ${JSON.stringify(error)}`);
+  console.log(`mongoDB ::: error ::: ${JSON.stringify(error)}`);
 });
 
 process.on("SIGINT", async () => {
@@ -25,3 +26,4 @@ process.on("SIGINT", async () => {
 });
 
 module.exports = connect;
+//xong require thư mục này là nó tự động kết nối, nhưng cái này chỉ kết nối được 1 store

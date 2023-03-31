@@ -1,31 +1,65 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-require("dotenv").config();
-const CreateError = require("http-errors");
-const User = require("../app/models/User.model");
+require('dotenv').config();
+const CreateError = require('http-errors');
 
-router.post("/register", async (req, res, next) => {
-  try {
-    const { email, password } = req.body;
-    if (!email || !password) {
-      throw CreateError.BadRequest();
+const User = require('../app/models/User.model');
+const { userValidate } = require('../helpers/validation');
+
+router.post('/register', async (req, res, next) => {
+    try {
+        const { email, password } = req.body;
+        const { error } = userValidate(req.body);
+
+        if (error) {
+            throw CreateError(error.details[0].message);
+        }
+
+        const isExist = await User.findOne({ email });
+        if (isExist) {
+            throw CreateError.Conflict(`${email} already exists`);
+        }
+
+        const user = new User({ email, password });
+        const savedUser = await user.save();
+
+        return res.json({
+            status: 'Successfully created',
+            element: savedUser,
+        });
+    } catch (error) {
+        next(error);
     }
-    const isExist = await User.findOne({ username: email, password });
-    if (isExist) {
-      throw CreateError.Conflict(`${email} already exists`);
-    }
-    const isCreate = await User.create({ username: email, password });
-    return res.json({
-      status: "Successfully created",
-      element: isCreate,
-    });
-  } catch (error) {
-    next(error);
-  }
 });
 
-router.get("/", function (req, res) {
-  res.send("Welcome to User Page");
+router.post('/login', async (req, res, next) => {
+    try {
+        const { email, password } = req.body;
+        const { error } = userValidate(req.body);
+
+        if (error) {
+            throw CreateError(error.details[0].message);
+        }
+
+        const user = await User.findOne({ email });
+        console.log(user);
+
+        if (!user) {
+            throw CreateError.NotFound(' not found Email');
+        }
+        //truyền password từ body(POST) và this.password từ user tìm thấy từ email
+        const isMatch = await user.isCheckPassword(password);
+        if (!isMatch) {
+            throw CreateError.Unauthorized();
+        }
+        res.send('Login is Successfully');
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.get('/', function (req, res) {
+    res.send('Welcome to User Page');
 });
 
 module.exports = router;
