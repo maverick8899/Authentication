@@ -5,6 +5,7 @@ const CreateError = require('http-errors');
 
 const User = require('../app/models/User.model');
 const { userValidate } = require('../helpers/validation');
+const { signAccessToken } = require('../helpers/jwt_service');
 
 router.post('/register', async (req, res, next) => {
     try {
@@ -52,7 +53,10 @@ router.post('/login', async (req, res, next) => {
         if (!isMatch) {
             throw CreateError.Unauthorized();
         }
-        res.send('Login is Successfully');
+        //Create Access_Token
+        const accessToken = await signAccessToken(user._id);
+
+        res.json({ accessToken });
     } catch (error) {
         next(error);
     }
