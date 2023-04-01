@@ -5,7 +5,13 @@ const CreateError = require('http-errors');
 
 const User = require('../app/models/User.model');
 const { userValidate } = require('../helpers/validation');
-const { signAccessToken, verifyAccessToken, signRefreshToken, verifyRefreshToken } = require('../helpers/jwt_service');
+const {
+    signAccessToken,
+    verifyAccessToken,
+    signRefreshToken,
+    verifyRefreshToken,
+} = require('../helpers/jwt_service');
+const client = require('../helpers/connections_redis');
 
 router.post('/register', async (req, res, next) => {
     try {
@@ -35,7 +41,6 @@ router.post('/register', async (req, res, next) => {
 
 router.post('/refresh_token', async (req, res, next) => {
     try {
-        console.log(req.body);
         const { refreshToken } = req.body;
         if (!refreshToken) {
             throw CreateError.BadRequest();
@@ -80,6 +85,27 @@ router.post('/login', async (req, res, next) => {
         next(error);
     }
 });
+
+router.delete('/logout', async (req, res, next) => {
+    try {
+        const { refreshToken } = req.body;
+        if (!refreshToken) {
+            throw CreateError.BadRequest();
+        }
+        const { userId } = await verifyRefreshToken(refreshToken);
+        client.del(userId.toString(), (err, reply) => {
+            if (err) {
+                reject(CreateError.InternalServerError());
+            }
+            res.json({
+                message: 'logout >>>',
+            });
+        });
+    } catch (error) {
+        next(error);
+    }
+});
+
 router.get('/get_lists', verifyAccessToken, (req, res, next) => {
     const list = [
         {
