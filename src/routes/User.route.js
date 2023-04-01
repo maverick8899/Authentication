@@ -5,7 +5,7 @@ const CreateError = require('http-errors');
 
 const User = require('../app/models/User.model');
 const { userValidate } = require('../helpers/validation');
-const { signAccessToken, verifyAccessToken, signReFreshToken } = require('../helpers/jwt_service');
+const { signAccessToken, verifyAccessToken, signRefreshToken, verifyRefreshToken } = require('../helpers/jwt_service');
 
 router.post('/register', async (req, res, next) => {
     try {
@@ -33,6 +33,24 @@ router.post('/register', async (req, res, next) => {
     }
 });
 
+router.post('/refresh_token', async (req, res, next) => {
+    try {
+        console.log(req.body);
+        const { refreshToken } = req.body;
+        if (!refreshToken) {
+            throw CreateError.BadRequest();
+        }
+        const { userId } = await verifyRefreshToken(refreshToken);
+
+        const newAccessToken = await signAccessToken(userId);
+        const newRefreshToken = await signRefreshToken(userId);
+
+        res.json({ newAccessToken, newRefreshToken });
+    } catch (error) {
+        next(error);
+    }
+});
+
 router.post('/login', async (req, res, next) => {
     try {
         const { email, password } = req.body;
@@ -55,7 +73,7 @@ router.post('/login', async (req, res, next) => {
         }
         //Create Access_Token
         const accessToken = await signAccessToken(user._id);
-        const refreshToken = await signReFreshToken(user._id);
+        const refreshToken = await signRefreshToken(user._id);
 
         res.json({ accessToken, refreshToken });
     } catch (error) {
