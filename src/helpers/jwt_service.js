@@ -5,7 +5,7 @@ const client = require('./connections_redis');
 
 const signAccessToken = async (userId) => {
     const options = {
-        expiresIn: '5m', //10m 10s 10d ...
+        expiresIn: '20s', //10m 10s 10d ...
     };
     return new Promise((resolve, reject) => {
         JWT.sign({ userId }, process.env.ACCESS_TOKEN, options, (err, token) => {
@@ -38,7 +38,7 @@ const verifyAccessToken = (req, res, next) => {
 
 const signRefreshToken = async (userId) => {
     const options = {
-        expiresIn: '1h', //10m 10s 10d ...
+        expiresIn: '1d', //10m 10s 10d ...
     };
     return new Promise((resolve, reject) => {
         JWT.sign({ userId }, process.env.REFRESH_TOKEN, options, (err, token) => {
