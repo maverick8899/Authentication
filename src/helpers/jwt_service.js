@@ -1,80 +1,86 @@
 const JWT = require('jsonwebtoken');
 const CreateError = require('http-errors');
 
-const client = require('./connections_redis');
-
-const signAccessToken = async (userId) => {
-    const options = {
-        expiresIn: '20s', //10m 10s 10d ...
-    };
-    return new Promise((resolve, reject) => {
-        JWT.sign({ userId }, process.env.ACCESS_TOKEN, options, (err, token) => {
-            err && reject(err);
-            resolve(token);
-        });
-    });
-};
-
-const verifyAccessToken = (req, res, next) => {
-    const authorHeader = req.headers['authorization'];
-    if (!authorHeader) {
-        next(CreateError.Unauthorized());
-    }
-    //Get Access_Token
-    const token = authorHeader.split(' ')[1];
-    //verify Access_Token
-    //nó decode nếu kết quả không khớp với key ở sign thì trả về lỗi
-    JWT.verify(token, process.env.ACCESS_TOKEN, (err, decode) => {
-        if (err) {
-            if (err.name === 'TokenExpiredError') {
-                return next(CreateError.Unauthorized(err.message));
-            }
-            return next(CreateError.Unauthorized(err.message));
-        }
-        req.payload = decode;
-        next();
-    });
-};
-
-const signRefreshToken = async (userId) => {
-    const options = {
-        expiresIn: '1d', //10m 10s 10d ...
-    };
-    return new Promise((resolve, reject) => {
-        JWT.sign({ userId }, process.env.REFRESH_TOKEN, options, (err, token) => {
-            //set lại refreshToken trong blacklist
-            client.set(userId.toString(), token, 'EX', 365 * 24 * 60 * 60, (err, reply) => {
-                if (err) {
-                    reject(CreateError.InternalServerError());
-                }
+const redisClient = require('../configs/connections_redis');
+//
+module.exports = {
+    signAccessToken: async (userId) => {
+        const options = {
+            expiresIn: '30s', //10m 10s 10d ...
+        };
+        return new Promise((resolve, reject) => {
+            JWT.sign({ userId }, process.env.ACCESS_TOKEN, options, (err, token) => {
+                err && reject(err);
                 resolve(token);
             });
         });
-    });
-};
+    },
 
-const verifyRefreshToken = (refreshToken) => {
-    return new Promise((resolve, reject) => {
-        JWT.verify(refreshToken, process.env.REFRESH_TOKEN, (err, payload) => {
-            err && reject(err);
+    verifyAccessToken: (token) => {
+        //decode Access_Token by verify Func
+        try {
+            const decode = JWT.verify(token, process.env.ACCESS_TOKEN);
+            console.log('jwt_service.verifyAccessToken.decode', decode);
+            return decode;
+        } catch (err) {
+            //catch error expired
+            if (err.name === 'TokenExpiredError') {
+                throw { code: 401, message: err.message };
+            } else {
+                throw { code: 500, message: err.message };
+            }
+        }
+    },
 
-            //get dữ liệu từ redis
-            client.get(payload.userId, (err, reply) => {
-                console.log({ refreshToken_Login: refreshToken, refreshToken_Redis: reply });
-                //check err
-                if (err) {
-                    reject(CreateError.InternalServerError());
-                }
-                //refreshToken phải bằng value của key userId thì mới trả về decode
-                if (refreshToken === reply) {
-                    return resolve(payload);
-                } else {
-                    reject(CreateError.Unauthorized());
-                }
-                //trường hợp key-value in redis hết hạn
+    signRefreshToken: async (userId) => {
+        const options = {
+            expiresIn: '1d', //10s 10m 10h 10d...
+        };
+        return new Promise((resolve, reject) => {
+            JWT.sign({ userId }, process.env.REFRESH_TOKEN, options, (err, token) => {
+                //
+                err && reject(err);
+                //set refreshToken into blacklist_Redis, reply return Ok if not err
+                redisClient.set(
+                    userId.toString(),
+                    token,
+                    'EX',
+                    365 * 24 * 60 * 60,
+                    (err, reply) => {
+                        if (err) {
+                            reject(CreateError.InternalServerError());
+                        }
+                        resolve(token);
+                    },
+                );
             });
         });
-    });
-};
+    },
+    //receive refreshToken before (generated from api login)
+    verifyRefreshToken: (refreshToken) => {
+        return new Promise((resolve, reject) => {
+            JWT.verify(refreshToken, process.env.REFRESH_TOKEN, (err, decode) => {
+                //
+                err && reject(err);
 
-module.exports = { signAccessToken, verifyAccessToken, signRefreshToken, verifyRefreshToken };
+                //get dữ liệu từ redis
+                redisClient.get(decode.userId, (err, reply) => {
+                    //
+                    //reply return value compatible with userId in Redis
+                    console.log('jwt_service.verifyRefreshToken', {
+                        refreshToken_Login: refreshToken,
+                        refreshToken_Redis: reply,
+                    });
+
+                    //check err
+                    err && reject(CreateError.InternalServerError());
+
+                    //kiểm tra RF truyền vào phải bằng với RF được tạo ra ở API login thì mới trả về decode
+                    return refreshToken === reply
+                        ? resolve(decode)
+                        : reject(CreateError.Unauthorized());
+                });
+            });
+        });
+    },
+};
