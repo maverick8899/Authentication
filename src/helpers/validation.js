@@ -4,7 +4,7 @@ const userValidate = (data) => {
     //Định nghĩa dữ liệu đưa vào
     const userSchema = Joi.object({
         email: Joi.string().email().pattern(new RegExp('gmail.com')).lowercase().required(),
-        password: Joi.string().min(6).max(32).required(),
+        password: Joi.string().min(6).max(30).required(),
         role: Joi.string().allow('user', 'manager', 'admin').default('user'),
     });
     //validate

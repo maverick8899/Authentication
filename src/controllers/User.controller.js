@@ -4,9 +4,42 @@ const User = require('../app/models/User.model');
 const { userValidate } = require('../helpers/validation');
 const JWT = require('../helpers/jwt_service');
 const redisClient = require('../configs/connections_redis');
+const { generateSign } = require('../utils/GenerateSign.util');
 //
-const MAX_ACCESS_TOKEN_AGE = 30_000; //30s
-const MAX_REFRESH_TOKEN_AGE = 3_600_000; //1h
+const setAccessTokenCookie = (res, accessToken) => {
+    const MAX_ACCESS_TOKEN_AGE = 30_000; //30s
+    res.cookie('accessToken', accessToken, {
+        signed: true,
+        domain: 'localhost',
+        sameSite: 'Strict',
+        httpOnly: true,
+        maxAge: MAX_ACCESS_TOKEN_AGE,
+    });
+};
+const setRefreshTokenCookie = (res, refreshToken) => {
+    const MAX_REFRESH_TOKEN_AGE = 3_600_000; //1h
+    res.cookie('refreshToken', refreshToken, {
+        signed: true,
+        domain: 'localhost',
+        sameSite: 'Strict',
+        httpOnly: true,
+        maxAge: MAX_REFRESH_TOKEN_AGE,
+    });
+};
+const refreshTokens = async (res, refreshToken) => {
+    const { userId } = await JWT.verifyRefreshToken(refreshToken);
+    const newAccessToken = await JWT.signAccessToken(userId);
+    const newRefreshToken = await JWT.signRefreshToken(userId);
+    //set accessToken into cookie
+    setAccessTokenCookie(res, newAccessToken);
+    setRefreshTokenCookie(res, newRefreshToken);
+    //log
+    console.log('UserController.refreshToken:', {
+        newAccessToken,
+        newRefreshToken,
+    });
+    return { newAccessToken, newRefreshToken };
+};
 const renderManager = (req, res, next) => {
     res.render('manager', { layout: 'home' });
 };
@@ -18,7 +51,7 @@ const renderAdmin = (req, res, next) => {
 module.exports = {
     register: async (req, res, next) => {
         try {
-            const { email, password, role } = req.body;
+            const { email, password } = req.body;
 
             //Validate
             const { error } = userValidate(req.body);
@@ -31,13 +64,13 @@ module.exports = {
                 throw CreateError.Conflict(`${email} already exists`);
             }
             //Stored
-            const user = new User({ email, password, role });
+            const user = new User({ email, password });
             await user.save();
 
             //response to Client
-            return res.json({
+            return res.status(200).json({
                 status: 'success',
-                element: user,
+                elements: user,
             });
         } catch (error) {
             next(error);
@@ -73,41 +106,30 @@ module.exports = {
             const refreshToken = await JWT.signRefreshToken(user._id);
             console.log('User.Controller.login', { accessToken, refreshToken });
 
-            //set cookie
-            res.cookie('accessToken', accessToken, {
-                httpOnly: true,
-                maxAge: MAX_ACCESS_TOKEN_AGE,
-            }).cookie('refreshToken', refreshToken, {
-                httpOnly: true,
-                maxAge: MAX_REFRESH_TOKEN_AGE,
-            });
+            //set tokens into cookie
+            setAccessTokenCookie(res, accessToken);
+            setRefreshTokenCookie(res, refreshToken);
+
             //response to Client
             res.json({ DT: { accessToken, refreshToken }, status: 'success' });
         } catch (error) {
             next(error);
         }
     },
-
     refreshToken: async (req, res, next) => {
         try {
             //get refreshToken
-            const refreshToken = req.cookies.refreshToken;
+            const refreshToken = req.signedCookies.refreshToken;
             console.log('User.Controller.refreshToken', refreshToken);
             if (!refreshToken) {
                 throw CreateError.BadRequest();
             }
 
-            //Check refreshToken valid ?
-            const { userId } = await JWT.verifyRefreshToken(refreshToken);
-            const newAccessToken = await JWT.signAccessToken(userId);
+            //refreshToken
+            const { newAccessToken, newRefreshToken } = await refreshTokens(res, refreshToken);
 
-            console.log('User.Controller.refreshToken', { newAccessToken });
             //response to client
-            res.cookie('accessToken', newAccessToken, {
-                httpOnly: true,
-                maxAge: MAX_ACCESS_TOKEN_AGE,
-            });
-            res.json({ DT: { newAccessToken }, status: 'success' });
+            res.json({ DT: { newAccessToken, newRefreshToken }, status: 'success' });
         } catch (error) {
             next(error);
         }
@@ -116,7 +138,7 @@ module.exports = {
     logout: async (req, res, next) => {
         try {
             //check refreshToken valid
-            const refreshToken = req.cookies.refreshToken;
+            const refreshToken = req.signedCookies.refreshToken;
             if (!refreshToken) throw CreateError.BadRequest();
 
             //kiểm tra xem refreshToken có hợp lệ không, néu hợp lệ thì decode => userId
@@ -144,19 +166,19 @@ module.exports = {
     verifyAccessToken: async (req, res, next) => {
         try {
             //get value key authorization form headers
-            const authorHeader = req.headers['authorization'];
-            console.log('UserController.verifyAccessToken.authorHeader->', authorHeader);
+            const authorization = req.headers['authorization'];
+            console.log('UserController.verifyAccessToken.authorization->', authorization);
 
             //redirect handle error if authorHeader===null
-            if (!authorHeader) {
+            if (!authorization) {
                 return next(CreateError.Unauthorized());
             }
 
             //Get Access_Token from authorHeader (Bearer token)
-            const token = authorHeader.split(' ')[1];
-            console.log('UserController.verifyAccessToken.accessToken->' + token);
+            const accessToken = authorization.split(' ')[1];
+            console.log('UserController.verifyAccessToken.accessToken->' + accessToken);
 
-            const decode = JWT.verifyAccessToken(token);
+            const decode = JWT.verifyAccessToken(accessToken);
             const user = await User.findOne({ _id: decode.userId });
             console.log('UserController.verifyAccessToken.UserQuery', user);
 
@@ -165,11 +187,61 @@ module.exports = {
             next(error);
         }
     },
+    securityAPI: async (req, res, next) => {
+        const checkNonceExists = async (nonce) => {
+            return new Promise((resolve, reject) => {
+                redisClient.get(`nonce_${nonce}`, (err, reply) => {
+                    //reply return value compatible with userId in Redis
+                    //check err
+                    err && reject(CreateError.InternalServerError());
+                    console.log({ nonce, reply });
+                    return resolve(nonce === reply ? 'nonce is exists' : false);
+                });
+            });
+        };
+        try {
+            const { timestamp, sign, nonce } = req.query;
+            if (!timestamp || !sign || !nonce) {
+                throw CreateError.BadRequest('Bad Request');
+            }
+
+            //check nonce exists
+            const nonceExists = await checkNonceExists(nonce);
+            if (nonceExists) {
+                throw CreateError.Unauthorized(nonceExists);
+            }
+
+            //case api reuse after 30s
+            const isTime = Math.floor((Date.now() - +timestamp) / 1000);
+            if (isTime > 30) {
+                throw CreateError.Unauthorized('expired');
+            }
+
+            //check sign match
+            const signServer = await generateSign(req.query);
+            console.log('SecurityAPI', { isTime, sign, signServer });
+            if (signServer !== sign) {
+                throw CreateError.Unauthorized('sign invalid');
+            }
+
+            //Set nonce and next
+            redisClient.set(`nonce_${nonce}`, nonce, 'EX', 365 * 24 * 60 * 60, (err, reply) => {
+                if (err) {
+                    throw CreateError.InternalServerError();
+                }
+                next();
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
     checkLogin: async (req, res, next) => {
         //
         console.log('UserController.checkLogin.Cookies', req.cookies);
-        const refreshToken = req.cookies.refreshToken;
-        const accessToken = req.cookies.accessToken;
+        console.log('UserController.checkLogin.signedCookies', req.signedCookies);
+
+        const refreshToken = req.signedCookies.refreshToken;
+        const accessToken = req.signedCookies.accessToken;
         //
         const getUserFromAccessToken = async (accessToken) => {
             const decode = JWT.verifyAccessToken(accessToken);
@@ -186,16 +258,10 @@ module.exports = {
                 //send to checkRole
                 req.payload = await getUserFromAccessToken(accessToken);
             } else if (!accessToken) {
-                const { userId } = await JWT.verifyRefreshToken(refreshToken);
-                const newAccessToken = await JWT.signAccessToken(userId);
-                console.log('UserController.checkLogin.refreshToken:', newAccessToken);
+                //refreshToken
+                const { newAccessToken } = await refreshTokens(res, refreshToken);
 
-                res.cookie('accessToken', newAccessToken, {
-                    httpOnly: true,
-                    maxAge: MAX_ACCESS_TOKEN_AGE,
-                });
-
-                //send to checkRole
+                //dispatch to checkRole
                 req.payload = await getUserFromAccessToken(newAccessToken);
             }
         } catch (error) {

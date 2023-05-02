@@ -1,10 +1,20 @@
 const JWT = require('../helpers/jwt_service');
 //
+const setAccessTokenCookie = (res, accessToken) => {
+    const MAX_ACCESS_TOKEN_AGE = 30_000; //30s
 
+    res.cookie('accessToken', accessToken, {
+        signed: true,
+        domain: 'localhost',
+        sameSite: 'Strict',
+        httpOnly: true,
+        maxAge: MAX_ACCESS_TOKEN_AGE,
+    });
+};
 module.exports = {
     checkLogin: async (req, res, next) => {
-        const refreshToken = req.cookies.refreshToken;
-        const accessToken = req.cookies.accessToken;
+        const refreshToken = req.signedCookies.refreshToken;
+        const accessToken = req.signedCookies.accessToken;
         //nếu không có refreshToken chuyển đến login để tạo tokens
         if (!refreshToken) {
             return next();
@@ -23,7 +33,8 @@ module.exports = {
                 const newAccessToken = await JWT.signAccessToken(userId);
                 console.log('indexRoute.refreshToken:', newAccessToken);
 
-                res.cookie('accessToken', newAccessToken, { httpOnly: true, maxAge: 30_000 });
+                setAccessTokenCookie(res, newAccessToken);
+
                 res.redirect('/user/home');
             }
         } catch (error) {
