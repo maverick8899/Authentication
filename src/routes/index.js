@@ -1,5 +1,7 @@
 const createError = require('http-errors');
+const { v4: uuid } = require('uuid'); //tạo id định danh duy nhất => zalo node_express
 
+const logEvents = require('../helpers/logEvents');
 const apiRoute = require('./Api.route');
 const userRoute = require('./User.route');
 const indexRoute = require('./index.route');
@@ -18,6 +20,7 @@ function route(app) {
 
     // Middleware xử lý lỗi 500
     app.use((error, req, res, next) => {
+        logEvents(`id: ${uuid()} - ${req.url} - ${req.method} - ${error.message}`);
         res.json({
             status: error.status || error.code || 500,
             message: error.message,
