@@ -2,14 +2,14 @@ const createError = require('http-errors');
 const { v4: uuid } = require('uuid'); //tạo id định danh duy nhất => zalo node_express
 
 const logEvents = require('../helpers/logEvents');
-const apiRoute = require('./Api.route');
+const chatRoute = require('./Chat.route');
 const userRoute = require('./User.route');
 const indexRoute = require('./index.route');
 
 function route(app) {
     //
     app.use('/user', userRoute); //testAPI
-    app.use('/api', apiRoute); //web login
+    app.use('/api', chatRoute); //web login
 
     app.use('/', indexRoute);
 

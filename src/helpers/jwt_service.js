@@ -6,7 +6,7 @@ const redisClient = require('../configs/connections_redis');
 module.exports = {
     signAccessToken: async (userId) => {
         const options = {
-            expiresIn: '30s', //10m 10s 10d ...
+            expiresIn: '30m', //10m 10s 10d ...
         };
         return new Promise((resolve, reject) => {
             JWT.sign({ userId }, process.env.ACCESS_TOKEN, options, (err, token) => {

@@ -10,7 +10,7 @@ client.ping((err, pong) => {
 });
 
 client.on('connect', () => {
-    console.log('--> Redis client connected');
+    console.log('--> Redis client connected'.yellow.italic);
 });
 
 client.on('error', (err) => {

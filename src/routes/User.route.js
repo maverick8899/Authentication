@@ -7,7 +7,10 @@ const checkAdmin = UserController.checkRole('admin');
 
 router.post('/register', UserController.register);
 //Authentication
-router.post('/login', UserController.securityAPI, UserController.login);
+router.post(
+    '/login', //UserController.securityAPI,
+    UserController.login,
+);
 
 //Authorization
 router.get('/home', UserController.checkLogin, (req, res) => {
@@ -29,6 +32,8 @@ router.get(
     UserController.verifyAccessToken,
     UserController.getLists,
 );
+//CHAT
+router.get('/search', UserController.verifyAccessToken, UserController.allUsers);
 
 router.delete('/logout', UserController.logout);
 

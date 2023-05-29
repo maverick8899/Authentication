@@ -1,6 +1,6 @@
 const CreateError = require('http-errors');
 
-const User = require('../app/models/User.model');
+const User = require('../models/User.model');
 const { userValidate } = require('../helpers/validation');
 const JWT = require('../helpers/jwt_service');
 const redisClient = require('../configs/connections_redis');
@@ -51,8 +51,9 @@ const renderAdmin = (req, res, next) => {
 module.exports = {
     register: async (req, res, next) => {
         try {
-            const { email, password } = req.body;
+            const { name, email, password, picture } = req.body;
 
+            console.log({ name, email, password, picture });
             //Validate
             const { error } = userValidate(req.body);
             if (error) {
@@ -64,13 +65,14 @@ module.exports = {
                 throw CreateError.Conflict(`${email} already exists`);
             }
             //Stored
-            const user = new User({ email, password });
+            const user = new User({ name, email, password, picture });
             await user.save();
 
             //response to Client
             return res.status(200).json({
                 status: 'success',
                 elements: user,
+                token: await JWT.signAccessToken(user._id),
             });
         } catch (error) {
             next(error);
@@ -179,9 +181,11 @@ module.exports = {
             console.log('UserController.verifyAccessToken.accessToken->' + accessToken);
 
             const decode = JWT.verifyAccessToken(accessToken);
-            const user = await User.findOne({ _id: decode.userId });
+            //bỏ password trả về
+            const user = await User.findOne({ _id: decode.userId }).select('-password');
             console.log('UserController.verifyAccessToken.UserQuery', user);
 
+            req.user = user;
             next();
         } catch (error) {
             next(error);
@@ -206,8 +210,7 @@ module.exports = {
             }
 
             //check nonce exists
-            const nonceExists = await checkNonceExists(nonce);
-            if (nonceExists) {
+            if (await checkNonceExists(nonce)) {
                 throw CreateError.Unauthorized(nonceExists);
             }
 
@@ -291,4 +294,25 @@ module.exports = {
             handlers[role](req, res, next);
         };
     },
+    async allUsers(req, res) {
+        let users = {};
+        const keyword = req.query.keyword
+            ? {
+                  $or: [
+                      { name: { $regex: req.query.keyword, $options: 'i' } },
+                      //   { email: { $regex: req.query.keyword, $options: 'i' } },
+                  ],
+              }
+            : undefined;
+        if (keyword === undefined) {
+            users = await User.find();
+        } else {
+            users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
+        }
+        res.json(users);
+    },
 };
+//$or là một toán tử trong MongoDB cho phép truy vấn theo nhiều điều kiện.
+//$regex được sử dụng để so khớp các chuỗi với một mẫu được chỉ định.
+//option i không phân biệt hoa thường
+//find({ _id: { $ne: req.user._id } })  Điều kiện này chỉ định rằng _id (ID người dùng) phải khác với req.user._id

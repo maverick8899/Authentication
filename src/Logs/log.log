@@ -1,1 +1,102 @@
 03-05-2023 | 11:53:57 - id: f0725e15-dd8e-4eec-83b6-76bab521fb15 - /notFound - GET - This page does not exist
+26-05-2023 | 20:30:09 - id: 06c978ee-d67e-4d7a-a658-30f00668f0d0 - /user/register - POST - "email" is required
+26-05-2023 | 20:35:17 - id: 065fcbb5-4c2f-4907-bfa8-dacec6d38370 - /user/register - POST - "email" is required
+26-05-2023 | 20:36:38 - id: c0d0d073-0a79-461a-a1bb-08e8d328d744 - /user/register - POST - "email" is required
+26-05-2023 | 20:39:56 - id: d796d413-e2d0-4df7-925a-6e084ebf7815 - /user/register - POST - user2@gmail.com already exists
+27-05-2023 | 08:07:35 - id: fd05b94b-40d5-4ab3-ac5a-e0585891199f - /user/register - POST - "name" is not allowed
+27-05-2023 | 08:10:39 - id: 256f1827-792a-4262-a3a7-d0a715395d92 - /user/register - POST - user3@gmail.com already exists
+27-05-2023 | 08:56:22 - id: cb3acb6a-887e-482d-8f87-e7e4aaf2b3f1 - /user/register - POST - user3@gmail.com already exists
+27-05-2023 | 08:56:48 - id: e7f73450-8a7f-4c5e-9eeb-7e58a4f83f3f - /user/register - POST - user3@gmail.com already exists
+27-05-2023 | 09:04:23 - id: b34b615e-c373-4c2f-9848-e5c105432c0d - /user/register - POST - trankimbang0809@gmail.com already exists
+27-05-2023 | 09:05:27 - id: 6984fb22-bdf5-4549-86db-787d44d859e8 - /user/register - POST - trankimbang0809@gmail.com already exists
+27-05-2023 | 09:06:52 - id: 7bd6a9cb-9a1c-4aae-9b0f-b4ad8fa82c19 - /user/register - POST - trankimbang0809@gmail.com already exists
+27-05-2023 | 09:07:50 - id: 5e8008b0-228f-4305-bbe3-5e217e2b2b89 - /user/register - POST - trankimbang0809s@gmail.com already exists
+27-05-2023 | 13:01:40 - id: 313b69c1-910f-4208-9cf9-b951b21dfe14 - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:01:56 - id: 1923bf20-4d71-45e2-bf79-b6bdd7c18921 - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:02:06 - id: 232ea569-0d66-4219-8205-197b07dda4ac - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:03:41 - id: c398915a-d417-4d2e-b6a7-6c757c57ffa2 - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:03:43 - id: 0eff580b-a3eb-4aed-92cc-439dfdfd3aae - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:03:44 - id: 76a2096a-18ed-4a5c-841e-e78840016402 - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:04:03 - id: 8053fcc8-44b6-43c2-a6b0-d5318c3277b4 - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:04:35 - id: 5439ee65-4612-48e9-9c43-8bd168cfb403 - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:04:46 - id: 2bf5b2a1-b21e-48db-afbd-fcad32e33c68 - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:04:46 - id: bcec1d73-59ca-4249-801d-32f1185b9bfe - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:04:46 - id: 7ee396b8-78fa-4115-ae8d-71a1ca03d877 - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:04:47 - id: da4eb3e8-438d-49e7-a818-a3d5a3ca4832 - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:04:47 - id: d1991c51-0196-45d8-9d94-ddc9da5d635b - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:04:47 - id: f259ccc2-94d1-4ad9-b79d-3bd72b1ce1c7 - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:04:48 - id: 5a7e2eb3-40b9-4740-821f-c0d81a7388c6 - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:04:48 - id: 42057359-751c-4e54-99c6-6a325e37831e - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:04:48 - id: 3f88b0ad-8cb6-4482-8b3f-cb2a9286064d - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:04:48 - id: 199739fd-4ee1-4236-8476-382794106648 - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:04:49 - id: 841e4257-a4a2-4d82-8fc9-d10b762122ec - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:04:49 - id: 30d74cc7-51ea-4825-97a0-1d1b487db32c - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:05:03 - id: 82c09044-4be5-4ee3-97da-e704a5be5b9c - /user/register - POST - "email" must be a valid email
+27-05-2023 | 13:05:09 - id: c5983e02-c893-44e5-af86-d5d525d9e39f - /user/register - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:06:07 - id: 45feadcc-5262-4872-b3b6-66db21f87286 - /user/register - POST - trankimbang0809@gmail.com already exists
+27-05-2023 | 13:08:36 - id: 31d19959-d0ce-48ed-999d-e03c6168fd87 - /user/register - POST - trankimbang0809@gmail.com already exists
+27-05-2023 | 13:20:22 - id: 4e4bd455-4a10-4cba-8b1c-e58bd73bc3ab - /user/login - POST - Bad Request
+27-05-2023 | 13:24:12 - id: e212835f-4491-4e6b-903a-72582f83caf7 - /user/login - POST - "email" must be a valid email
+27-05-2023 | 13:24:23 - id: 2c7eb8ff-1383-4c27-b37a-1247ade43a05 - /user/login - POST - "password" length must be at least 6 characters long
+27-05-2023 | 13:24:37 - id: 22d97904-14a5-4759-8ed4-7929f2175fd3 - /user/login - POST - Unauthorized
+27-05-2023 | 13:25:28 - id: 29c0815f-fb45-4bf6-8b0b-8c526cd6e828 - /user/login - POST - Unauthorized
+27-05-2023 | 16:18:10 - id: d1c45505-f22d-4eec-8f39-be9e4bbd99b8 - /user/register - POST - trankimbang0809@gmail.com already exists
+27-05-2023 | 16:21:45 - id: 4eb26113-2612-4565-9839-f3ecf5aacc54 - /user/register - POST - trankimbang0809@gmail.com already exists
+27-05-2023 | 16:22:39 - id: d4520a67-d1e6-4517-bd13-7e4f17cd360d - /user/register - POST - trankimbang0809@gmail.com already exists
+27-05-2023 | 16:23:11 - id: e5dadbbd-7811-43ef-b8f2-db3dd0738b27 - /user/login - POST - "password" length must be at least 6 characters long
+27-05-2023 | 16:23:16 - id: 41944778-e8fa-4951-9820-29d27d366b93 - /user/login - GET - This page does not exist
+27-05-2023 | 16:23:17 - id: 5a55ef84-a258-4f03-ba65-6ea2b1b5a8c7 - /favicon.ico - GET - This page does not exist
+28-05-2023 | 14:15:52 - id: 086fa896-91c8-46b6-b11d-b69cd0dd63c7 - /user/search?keyword=k - GET - jwt expired
+28-05-2023 | 14:24:02 - id: 096aa939-88d6-4e0b-8252-ce2c4f7cb94e - /user/search?keyword=1 - GET - jwt expired
+28-05-2023 | 17:09:19 - id: acc0c24c-a8be-457a-991c-2c64a579c78e - /user/chat - POST - This page does not exist
+28-05-2023 | 17:09:29 - id: 6218daec-aadb-4d1f-8afc-3b084354cb4a - /api/chat - POST - This page does not exist
+28-05-2023 | 17:10:49 - id: 1f7d43cf-422f-443f-9102-796664404c37 - /api/chat - POST - Operation `chats.find()` buffering timed out after 10000ms
+28-05-2023 | 17:12:40 - id: 083c1d39-852a-4216-98be-bff3f541085f - /user/search?keyword=1 - GET - jwt expired
+28-05-2023 | 17:13:08 - id: ccb80e31-73e8-4465-ae0a-d6bfe52925e3 - /api/chat - POST - Cast to ObjectId failed for value ""6471cbe3e347d76278fd88c7"" (type string) at path "users" for model "Chat"
+28-05-2023 | 17:13:17 - id: 15b8faf1-b6a9-4a54-ad1a-2c2dc7e91bbe - /api/chat - POST - jwt expired
+28-05-2023 | 17:13:45 - id: 438b6641-9a4c-40a6-b0eb-953fbfb87303 - /api/chat - POST - Operation `chats.find()` buffering timed out after 10000ms
+28-05-2023 | 17:15:27 - id: 741ec150-e898-4c3d-b84b-4e58b7a530c1 - /api/chat - POST - Operation `chats.find()` buffering timed out after 10000ms
+28-05-2023 | 17:18:25 - id: abd4d84a-5b27-49e9-b65e-0a4c090d509d - /user/search - GET - jwt expired
+28-05-2023 | 17:21:22 - id: db456f4f-be4e-4dbf-b37d-053b358f0c62 - /api/chat - POST - jwt expired
+28-05-2023 | 17:21:47 - id: b15d6b7c-5e9c-4255-9daf-54122f6a6f65 - /api/chat - POST - Operation `chats.find()` buffering timed out after 10000ms
+28-05-2023 | 17:32:49 - id: 985ae3fa-d4c9-407f-b346-a6987254f3d3 - /api/chat - POST - Operation `chats.find()` buffering timed out after 10000ms
+28-05-2023 | 17:33:33 - id: ea1504b0-e2d5-4211-9078-48e9e0fea856 - /api/chat - POST - Operation `chats.find()` buffering timed out after 10000ms
+28-05-2023 | 17:39:13 - id: ce932f39-b9c8-43fb-b13c-61470b62d0e5 - /api/chat - POST - Operation `chats.find()` buffering timed out after 10000ms
+28-05-2023 | 17:39:48 - id: c10d55d4-a48e-458c-8afe-2119cff65904 - /api/chat - POST - Operation `chats.find()` buffering timed out after 10000ms
+28-05-2023 | 17:41:50 - id: 89914eed-7c3d-4033-9d09-8ccae2f7cea9 - /api/chat - POST - Operation `chats.find()` buffering timed out after 10000ms
+28-05-2023 | 17:48:08 - id: 9990209d-efb6-4d21-920b-f6fe7b8e9aad - /api/chat - POST - Operation `accounts.findOne()` buffering timed out after 10000ms
+28-05-2023 | 17:52:45 - id: 5023e15e-a88b-4d99-8682-ccb05d9dd640 - /api/chat - POST - jwt expired
+28-05-2023 | 17:53:00 - id: 060533f8-66be-4556-96df-9e75606be08b - /user/login - POST - Operation `accounts.findOne()` buffering timed out after 10000ms
+28-05-2023 | 17:53:24 - id: e764da89-2446-4f18-800b-dd8e721a33cf - /user/login - POST - Operation `accounts.findOne()` buffering timed out after 10000ms
+28-05-2023 | 17:54:30 - id: af1b2dd4-7f28-4b87-a1f6-ea521881f763 - /user/search - GET - jwt expired
+28-05-2023 | 17:54:43 - id: 3f975f05-9b53-4a49-a61a-5118e70f7cc4 - /user/login - POST - Operation `accounts.findOne()` buffering timed out after 10000ms
+28-05-2023 | 17:58:47 - id: e405ef95-86e8-481b-8397-570f4ec98175 - /user/login - POST - Operation `accounts.findOne()` buffering timed out after 10000ms
+28-05-2023 | 17:59:28 - id: 4f013d3b-e58c-47c0-8ec8-d759b2e555b1 - /user/login - POST - Operation `accounts.findOne()` buffering timed out after 10000ms
+28-05-2023 | 18:00:33 - id: 6de292c7-746a-42b8-9342-8336f512514a - /user/login - POST - Operation `accounts.findOne()` buffering timed out after 10000ms
+28-05-2023 | 18:00:51 - id: c94d0692-f70b-451a-a2f8-eaa81ceda3b3 - /user/login - POST - Operation `accounts.findOne()` buffering timed out after 10000ms
+28-05-2023 | 18:02:33 - id: cecff484-4530-4592-96d0-7beca06c8c01 - /user/login - POST - Operation `accounts.findOne()` buffering timed out after 10000ms
+28-05-2023 | 18:05:14 - id: 2f9299ac-2484-405e-b2e0-fe26ca972117 - /user/login - POST - Operation `accounts.findOne()` buffering timed out after 10000ms
+28-05-2023 | 18:12:08 - id: a31c60f9-be08-4ca6-bfd9-818359237e99 - /user/login - POST - Operation `accounts.findOne()` buffering timed out after 10000ms
+28-05-2023 | 18:13:38 - id: 27a525fa-dfa9-4c74-adf9-26dc779c5151 - /user/login - POST - Operation `accounts.findOne()` buffering timed out after 10000ms
+28-05-2023 | 18:20:02 - id: 07ffb69e-1801-4fd8-961e-16e2db1845a8 - /api/chat - POST - db already exists with different case already have: [ChatApp] trying to create [ChatAPP]
+28-05-2023 | 18:21:05 - id: 098e63aa-7797-4937-bcc0-f970a22cf39c - /api/chat - POST - db already exists with different case already have: [ChatApp] trying to create [ChatAPP]
+28-05-2023 | 18:21:19 - id: 5403b03f-581b-4ba3-a042-c4a297fd4b19 - /api/chat - POST - db already exists with different case already have: [ChatApp] trying to create [ChatAPP]
+28-05-2023 | 18:23:28 - id: 10cb8038-75f2-47a6-a3ce-a3fc64a09eec - /api/chat - POST - Schema hasn't been registered for model "User".
+Use mongoose.model(name, schema)
+28-05-2023 | 18:27:54 - id: 170f92ec-d5c8-4551-8c58-92e8cdcd607d - /api/chat - POST - Cannot read properties of null (reading '_id')
+28-05-2023 | 18:28:49 - id: 10343619-41fa-4869-8bbd-db0334894ef8 - /api/chat - POST - Schema hasn't been registered for model "User".
+Use mongoose.model(name, schema)
+28-05-2023 | 18:30:30 - id: 18d7d4c7-5acf-45ff-b489-2b8f464cb60b - /api/chat - POST - Schema hasn't been registered for model "User".
+Use mongoose.model(name, schema)
+28-05-2023 | 18:31:27 - id: 002ecabe-1c31-4356-8ff2-bc7c846999cb - /api/chat - POST - Cannot read properties of null (reading '_id')
+28-05-2023 | 18:32:28 - id: 328cf6e1-1166-4dea-8fb7-cb18f082ec26 - /api/chat - POST - Cannot read properties of null (reading '_id')
+28-05-2023 | 18:32:33 - id: 265427ef-b161-4db7-a55a-d263703701a2 - /user/login - POST - Not found Email
+29-05-2023 | 17:14:50 - id: 27de4c26-2b0d-41d2-b860-af0a9481e14e - /api/chat - GET - Unauthorized
+29-05-2023 | 18:59:10 - id: 9261b6bf-1d11-4a2b-99ce-be4cefd1278e - /api/chat - GET - jwt expired
+29-05-2023 | 19:38:27 - id: e5728aa0-2159-41b9-9307-c44f644026e7 - /api/chat - POST - Bad Request
+29-05-2023 | 19:39:40 - id: d2a4261a-bf51-41ec-b95a-37dc23bb5adb - /api/chat - POST - Bad Request
+29-05-2023 | 20:35:40 - id: 07e3a9d4-295a-4122-8ff9-9889274e8df1 - /api/rename - PUT - Unauthorized
+29-05-2023 | 20:47:27 - id: a48c268b-d192-4a37-b5ae-40ccff0c725b - /api/grounp_add - PUT - This page does not exist
+29-05-2023 | 20:48:31 - id: 024c3c5e-947b-417a-a53f-ab2a4be80abf - /api/grounp_add - PUT - This page does not exist
+29-05-2023 | 20:48:38 - id: 698c4b3c-3cfc-4bf6-8d5a-2b33aec6d717 - /api/grounp_add - POST - This page does not exist
+29-05-2023 | 20:49:01 - id: 7f431153-7d1d-460b-b3ad-f1cb57c3d668 - /api/grounp_add - PUT - This page does not exist

@@ -5,7 +5,10 @@ const path = require('path');
 const route = require('./routes');
 const handlebars = require('express-handlebars');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
+require('colors');
 
+app.use(cors());
 //parse and unlock cookie_lock
 app.use(cookieParser(process.env.KEY_SECRET_COOKIE));
 
@@ -30,5 +33,5 @@ app.use(express.urlencoded({ extended: true }));
 route(app);
 
 app.listen(port, function () {
-    console.log('Listening on port:', port);
+    console.log('Listening on port:'.cyan.bold, `${port}`.cyan.bold);
 });

@@ -3,8 +3,10 @@ const Joi = require('joi');
 const userValidate = (data) => {
     //Định nghĩa dữ liệu đưa vào
     const userSchema = Joi.object({
+        name: Joi.string(),
         email: Joi.string().email().pattern(new RegExp('gmail.com')).lowercase().required(),
         password: Joi.string().min(6).max(30).required(),
+        picture: Joi.string().uri(),
         role: Joi.string().allow('user', 'manager', 'admin').default('user'),
     });
     //validate

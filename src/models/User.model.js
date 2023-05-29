@@ -1,12 +1,17 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
-
-const { connectDB } = require('../../configs/connections_multi_mongDB');
+const { connectChatAPP } = require('../configs/connections_multi_mongDB');
 
 const UserSchema = new Schema({
+    name: { type: 'string', required: false },
     email: { type: String, lowercase: true, unique: true, require: true },
     password: { type: String, require: true },
+    picture: {
+        type: 'String',
+        default:
+            'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
+    },
     role: { type: String, enum: ['user', 'manager', 'admin'], default: 'user' },
 });
 
@@ -29,7 +34,8 @@ UserSchema.methods.isCheckPassword = async function (password) {
     //encrypted =decoded
     return await bcrypt.compare(password, this.password); // true false
 };
+const User = connectChatAPP.model('User', UserSchema);
 
-module.exports = connectDB.model('account', UserSchema);
+module.exports = User;
 //instance allow connect multi store, nếu không dùng đối tượng connections
 //module.exports = mongoose.model("user", UserSchema);
