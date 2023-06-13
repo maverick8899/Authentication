@@ -1,10 +1,13 @@
 const CreateError = require('http-errors');
+const otpGenerator = require('otp-generator');
 
 const User = require('../models/User.model');
 const { userValidate } = require('../helpers/validation');
 const JWT = require('../helpers/jwt_service');
-const redisClient = require('../configs/connections_redis');
+const client = require('../../../configs/connections_redis');
 const { generateSign } = require('../utils/GenerateSign.util');
+const { insertOTP, verifyOTP } = require('../services/OTP.service');
+const sendMail = require('../services/sendMail.service');
 //
 const setAccessTokenCookie = (res, accessToken) => {
     const MAX_ACCESS_TOKEN_AGE = 30_000; //30s
@@ -53,7 +56,7 @@ module.exports = {
         try {
             const { name, email, password, picture } = req.body;
 
-            console.log({ name, email, password, picture });
+            console.log('register'.yellow, { name, email, password, picture });
             //Validate
             const { error } = userValidate(req.body);
             if (error) {
@@ -64,19 +67,44 @@ module.exports = {
             if (isExist) {
                 throw CreateError.Conflict(`${email} already exists`);
             }
-            //Stored
-            const user = new User({ name, email, password, picture });
-            await user.save();
 
-            //response to Client
-            return res.status(200).json({
-                status: 'success',
-                elements: user,
-                token: await JWT.signAccessToken(user._id),
+            const otp = await otpGenerator.generate(6, {
+                lowerCaseAlphabets: false,
+                upperCaseAlphabets: false,
+                specialChars: false,
+            });
+            req.otp = otp;
+            await insertOTP({ otp, email });
+            console.log('insertOTP'.blue, { otp, email });
+            next();
+        } catch (error) {
+            next(error);
+        }
+    },
+    verifyOTP: async (req, res, next) => {
+        try {
+            const { otp, name, email, password, picture } = req.body;
+            const { code, elements, message, token } = await verifyOTP({
+                otp,
+                name,
+                email,
+                password,
+                picture,
+            });
+            res.status(code).json({
+                code,
+                elements,
+                message,
+                token,
             });
         } catch (error) {
             next(error);
         }
+    },
+    sendOTPMail: async (req, res) => {
+        const otp = req.otp;
+        const { code, message } = await sendMail(otp);
+        res.status(code).json({ code, message });
     },
     login: async (req, res, next) => {
         try {

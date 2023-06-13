@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 //
 mongoose.set('strictQuery', true); //bật chế độ kiểm tra,đọc zalo mongoDB
@@ -10,7 +11,7 @@ function newConnection(uri) {
     });
 
     connect.on('connected', function (error) {
-        console.log(`mongoDB ::: Connected ::: ${this.name}`.yellow.italic);
+        console.log(`mongoDB ::: Connected ::: ${this.name}`.yellow);
     });
     connect.on('reconnected ', function (error) {
         console.log(`mongoDB ::: Reconnected  ::: ${this.name}`);

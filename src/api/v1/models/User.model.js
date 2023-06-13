@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
-const { connectChatAPP } = require('../configs/connections_multi_mongDB');
+const { connectChatAPP } = require('../../../configs/connections_mongDB');
 
 const UserSchema = new Schema({
     name: { type: 'string', required: false },
@@ -21,7 +21,7 @@ UserSchema.pre('save', async function (next) {
         const hashPassword = await bcrypt.hash(this.password, 10);
         this.password = hashPassword;
         next(); //next là hàm async
-        console.log(`-->Called before save ::: ${this.email} ${this.password}`);
+        console.log(`Save user ::: ${this.email} ${this.password}`.green);
     } catch (error) {
         next(error);
     }
@@ -34,8 +34,7 @@ UserSchema.methods.isCheckPassword = async function (password) {
     //encrypted =decoded
     return await bcrypt.compare(password, this.password); // true false
 };
-const User = connectChatAPP.model('User', UserSchema);
 
-module.exports = User;
+module.exports = connectChatAPP.model('User', UserSchema);
 //instance allow connect multi store, nếu không dùng đối tượng connections
 //module.exports = mongoose.model("user", UserSchema);

@@ -1,7 +1,8 @@
 const JWT = require('jsonwebtoken');
 const CreateError = require('http-errors');
 
-const redisClient = require('../configs/connections_redis');
+const redisClient = require('../../../configs/connections_redis');
+
 //
 module.exports = {
     signAccessToken: async (userId) => {

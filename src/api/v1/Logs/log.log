@@ -100,3 +100,78 @@ Use mongoose.model(name, schema)
 29-05-2023 | 20:48:31 - id: 024c3c5e-947b-417a-a53f-ab2a4be80abf - /api/grounp_add - PUT - This page does not exist
 29-05-2023 | 20:48:38 - id: 698c4b3c-3cfc-4bf6-8d5a-2b33aec6d717 - /api/grounp_add - POST - This page does not exist
 29-05-2023 | 20:49:01 - id: 7f431153-7d1d-460b-b3ad-f1cb57c3d668 - /api/grounp_add - PUT - This page does not exist
+10-06-2023 | 20:33:00 - id: 97711019-cb53-4b10-81ce-cc96d1f9983c - /user/login - POST - Operation `users.findOne()` buffering timed out after 10000ms
+10-06-2023 | 20:46:10 - id: 2c331425-7ad2-4c96-a3a9-e01a3def1ecc - /api/verifyOTP - GET - This page does not exist
+11-06-2023 | 14:46:58 - id: fff59833-c921-45ea-8c9f-ef0a34319a14 - /user/register - POST - user3@gmail.com already exists
+11-06-2023 | 14:50:34 - id: bf29b6b3-6305-4027-884d-4f1858715264 - /user/register - POST - next is not defined
+11-06-2023 | 14:50:59 - id: e1b2a93a-3d5d-4bb9-a552-18dbf3e18675 - /user/register - POST - user3@gmail.com already exists
+11-06-2023 | 14:51:15 - id: e28369dc-c60e-404a-9c31-11d3e15a822d - /user/register - POST - next is not defined
+11-06-2023 | 14:52:19 - id: 2ca10f45-b4b0-4250-8aaa-7ffee8d2f576 - /user/register - POST - user3@gmail.com already exists
+11-06-2023 | 14:56:15 - id: 16ceca3e-331c-4718-9927-cc20892fbfb6 - /user/register - POST - user3@gmail.com already exists
+11-06-2023 | 14:57:51 - id: 2bbe2a30-5eff-4ea6-ade6-bbb94935bd97 - /user/register - POST - user3@gmail.com already exists
+11-06-2023 | 15:06:27 - id: 76f7d144-c1c4-42ab-add1-cd1be94033ff - /user/register - POST - user5@gmail.com already exists
+11-06-2023 | 15:50:57 - id: 1bdd95b7-2b2a-421f-aba0-8c9e195a75b4 - /user/register - POST - user3@gmail.com already exists
+11-06-2023 | 15:52:40 - id: e340cc09-ccf7-4757-85d2-e2a523a23de8 - /user/register - POST - user is not defined
+11-06-2023 | 16:05:36 - id: 2f62a277-8b76-4ab7-8c44-5cc4f86af5d4 - /user/verifyOTP - POST - This page does not exist
+11-06-2023 | 16:05:57 - id: 30466e30-e4b4-47bf-86aa-6d73c94c68c4 - /apt/verifyOTP - POST - This page does not exist
+11-06-2023 | 16:06:31 - id: f018604d-3ae1-4442-bcca-7ba832c415e1 - /apt/verifyOTP - POST - This page does not exist
+11-06-2023 | 16:08:05 - id: da64ca4f-feb0-49b1-910a-7ce4b361018a - /api/verifyOTP - POST - Invalid status code: undefined
+11-06-2023 | 16:08:58 - id: b02c78d0-937a-4523-9632-4233a7def911 - /api/verifyOTP - POST - Invalid status code: undefined
+11-06-2023 | 16:10:17 - id: 5a2e902c-90ab-4da1-b972-9c6637dba88d - /api/verifyOTP - POST - Invalid status code: undefined
+11-06-2023 | 16:11:17 - id: 82482aee-1ac3-419f-8a16-63057296f370 - /api/verifyOTP - POST - Invalid status code: undefined
+11-06-2023 | 16:12:12 - id: 5f83f53b-3129-410e-a04e-108bfe558cb3 - /api/verifyOTP - POST - Invalid status code: undefined
+11-06-2023 | 16:12:20 - id: 97c8b221-751c-4c23-8a09-105b0ad9dc0b - /api/verifyOTP - POST - Invalid status code: undefined
+11-06-2023 | 16:12:26 - id: ae8089a2-7107-4143-99aa-92c6faa2a0d5 - /api/verifyOTP - POST - Invalid status code: undefined
+11-06-2023 | 16:12:59 - id: e0afc60c-f404-48e4-a7a5-1b6ed27b7713 - /api/verifyOTP - POST - Invalid status code: undefined
+11-06-2023 | 16:14:57 - id: 7a20f0e2-8850-44f0-90f9-240d4d7a2008 - /api/verifyOTP - POST - Invalid status code: undefined
+11-06-2023 | 16:15:41 - id: 6bbe604b-aea3-4f0b-9b3e-980da07739db - /api/verifyOTP - POST - Invalid status code: undefined
+11-06-2023 | 16:16:36 - id: 9cd08c3b-53ba-45b5-b780-97f499ec3df0 - /api/verifyOTP - POST - Invalid status code: undefined
+11-06-2023 | 16:17:46 - id: 13839762-4fa1-45c0-b043-b9f0f2d6a0cf - /api/verifyOTP - POST - Invalid status code: undefined
+11-06-2023 | 16:19:23 - id: 2c0d6f62-bf81-4cbf-bdb7-48ffe2ae8dbb - /api/verifyOTP - POST - code is not defined
+11-06-2023 | 16:25:15 - id: 4d6515ce-8e13-40c4-8032-8221c156c259 - /api/verifyOTP - POST - Cannot destructure property 'code' of '(intermediate value)' as it is undefined.
+11-06-2023 | 17:00:22 - id: de09553f-6a79-4115-a2c3-a10b372c2bad - /api/generateOTP - POST - This page does not exist
+11-06-2023 | 17:00:32 - id: f4f4090e-d302-4554-b404-bb73e6cdab77 - /api/sednOTP - POST - This page does not exist
+11-06-2023 | 17:09:36 - id: bb1fd117-78b3-4598-9d6e-e61112a0dff8 - /api/sendOTP - POST - This page does not exist
+11-06-2023 | 17:09:50 - id: a246c1b9-863d-412b-9783-cda59db0ac99 - /user/register - POST - Cannot set properties of undefined (setting 'otp')
+11-06-2023 | 17:12:20 - id: 60808b6b-eadf-4269-836a-1279220533f2 - /user/register - POST - Cannot set properties of undefined (setting 'otp')
+11-06-2023 | 17:24:35 - id: 4e46cb9c-ff21-438f-8c7e-e93445c4f7a1 - /user/register - POST - user3@gmail.com already exists
+11-06-2023 | 17:27:50 - id: dcc80f96-78e6-404c-933d-c503fdb7690a - /api/verifyOTP - POST - Cannot destructure property 'code' of '(intermediate value)' as it is undefined.
+11-06-2023 | 17:27:59 - id: 1760f1c3-a4ba-4c36-b760-32aa65c98b6b - /api/verifyOTP - POST - Cannot destructure property 'code' of '(intermediate value)' as it is undefined.
+11-06-2023 | 17:29:17 - id: 99336c75-03cd-4a13-b607-372a9b13c4e3 - /api/verifyOTP - POST - Cannot destructure property 'code' of '(intermediate value)' as it is undefined.
+11-06-2023 | 17:36:37 - id: a1d10fbb-e52d-42b5-a489-e90dfc30e151 - /user/register - POST - user4@gmail.com already exists
+11-06-2023 | 20:53:22 - id: 1152cf3c-2410-4071-9dbd-b8e9fceeb914 - /favicon.ico - GET - This page does not exist
+11-06-2023 | 20:53:34 - id: a94720fe-f1ae-4c2c-98e5-fe2993e5ed1e - /favicon.ico - GET - This page does not exist
+11-06-2023 | 21:10:12 - id: dd0d171b-4d03-412b-92f1-d7f8893afced - /api/limit - GET - Cannot set headers after they are sent to the client
+11-06-2023 | 21:37:00 - id: 1afce3f3-008a-4b54-ad78-f3d2cd7b6424 - /api/limit - GET - This page does not exist
+11-06-2023 | 21:37:08 - id: febcb6e8-eaa1-4f3c-a046-cf0326c48733 - /api/limit - GET - This page does not exist
+11-06-2023 | 21:37:41 - id: c55fb96a-ddad-445b-a8f7-92af29f67bf6 - /api/limit - GET - This page does not exist
+11-06-2023 | 21:37:53 - id: 7d54b164-935d-4b6f-b70f-964812a1611a - /favicon.ico - GET - This page does not exist
+11-06-2023 | 21:40:01 - id: 05707193-2ffc-4a33-8454-2cc436a1362e - /api/limit - GET - This page does not exist
+11-06-2023 | 21:40:03 - id: 71e0f921-dbc7-42f3-88af-8e0dd794d7ef - /api/limit - GET - This page does not exist
+11-06-2023 | 21:40:05 - id: 4f9bd919-7f36-4638-902c-297cd2075873 - /api/limit - GET - This page does not exist
+11-06-2023 | 21:42:03 - id: 5361a36c-7f1b-4806-af38-d1a7d02db84d - /api/limit - GET - This page does not exist
+11-06-2023 | 21:42:04 - id: db982d2d-0294-4682-a8eb-9a8f6755f86a - /api/limit - GET - This page does not exist
+11-06-2023 | 21:44:49 - id: 902c509d-0a7a-4d53-ac8d-24d2af33843d - /api/limit - GET - Cannot set headers after they are sent to the client
+11-06-2023 | 21:49:19 - id: 8ab7e1ad-558d-4f49-a87f-fc4bc9633e37 - /favicon.ico - GET - This page does not exist
+11-06-2023 | 21:49:19 - id: 5920b671-9bbf-4097-879a-8df0be8421de - /apple-touch-icon-precomposed.png - GET - This page does not exist
+11-06-2023 | 21:49:19 - id: ea1bfa9c-4505-4daa-b048-44ad36dda080 - /apple-touch-icon.png - GET - This page does not exist
+11-06-2023 | 21:49:22 - id: 2968105c-a15f-4abe-8acb-2d5ea1e76852 - /apple-touch-icon-120x120-precomposed.png - GET - This page does not exist
+11-06-2023 | 21:49:22 - id: 2e172c3b-1859-4ad8-a5be-de504f8a5e18 - /apple-touch-icon-120x120.png - GET - This page does not exist
+11-06-2023 | 21:49:22 - id: 2057603c-5bcf-450f-9329-d4e161c2c8aa - /apple-touch-icon-precomposed.png - GET - This page does not exist
+11-06-2023 | 21:49:22 - id: e4e034b8-5a58-4c84-837b-fb386c9668ad - /apple-touch-icon.png - GET - This page does not exist
+11-06-2023 | 21:49:22 - id: 7e7080a1-13cc-41d6-a75c-cf8ffe9d792b - /favicon.ico - GET - This page does not exist
+11-06-2023 | 21:49:22 - id: e289a7b7-b17d-4cc3-9b14-dfd2a569456c - /apple-touch-icon-120x120-precomposed.png - GET - This page does not exist
+11-06-2023 | 21:49:22 - id: f3671362-3f76-4696-97ea-76798693ecad - /apple-touch-icon-120x120.png - GET - This page does not exist
+11-06-2023 | 21:49:22 - id: 07f3cef6-6f50-4b9c-abe6-accd89e4eb3c - /apple-touch-icon-precomposed.png - GET - This page does not exist
+11-06-2023 | 21:49:23 - id: 4240035e-b5da-46d9-94ae-e9e3d20ae52d - /apple-touch-icon.png - GET - This page does not exist
+11-06-2023 | 21:49:23 - id: 718e1098-2495-4b08-9488-a545fc17b0dd - /favicon.ico - GET - This page does not exist
+11-06-2023 | 21:49:50 - id: 3694f4f1-8bcd-425f-8afb-0e391e6fa5a6 - /api/limit - GET - Cannot set headers after they are sent to the client
+11-06-2023 | 22:06:54 - id: 1a8f1a98-6159-4a44-9736-046e506e8a36 - /user/verifyOTP - POST - This page does not exist
+11-06-2023 | 22:07:33 - id: 1c4d1f96-3c79-4371-970e-c50d8c0e4821 - /user/verifyOTP - POST - This page does not exist
+11-06-2023 | 22:47:00 - id: 9ef2b01c-353d-44c5-8306-8cfb4b97828f - /user/register - POST - user5@gmail.com already exists
+13-06-2023 | 09:08:04 - id: d6f68a13-1183-4887-95e0-c4d7b12f1f64 - / - GET - Failed to lookup view "index" in views directory "D:\VisualCode\Authentication\src\views"
+13-06-2023 | 09:08:04 - id: 443b165d-d399-45bd-86dd-4669626a1f73 - /favicon.ico - GET - Failed to lookup view "index" in views directory "D:\VisualCode\Authentication\src\views"
+13-06-2023 | 09:09:33 - id: 06cc4ba2-e6ac-413d-8258-8377d6b373bb - / - GET - Failed to lookup view "/api/v1/views/index" in views directory "D:\VisualCode\Authentication\src\views"
+13-06-2023 | 09:09:33 - id: af9bab19-3fe7-429a-9a11-28de67000ad6 - /favicon.ico - GET - Failed to lookup view "/api/v1/views/index" in views directory "D:\VisualCode\Authentication\src\views"
+13-06-2023 | 09:09:46 - id: f7d4f8d7-89dc-4eb8-9867-c012b129a9c8 - / - GET - Failed to lookup view "index" in views directory "D:\VisualCode\Authentication\src\views"
+13-06-2023 | 09:09:46 - id: d767d24f-a7eb-465d-92ed-2b10ea557251 - /favicon.ico - GET - Failed to lookup view "index" in views directory "D:\VisualCode\Authentication\src\views"

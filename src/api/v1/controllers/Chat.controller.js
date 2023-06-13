@@ -1,17 +1,17 @@
 const CreateError = require('http-errors');
 const Chat = require('../models/Chat.model');
 const User = require('../models/User.model');
+//
 module.exports = {
     async accessChat(req, res, next) {
         try {
             const { userId } = req.body;
             if (!userId) {
-                console.log('userId is not sent with request');
-                throw CreateError.BadRequest();
+                throw CreateError.BadRequest('userId is not sent with request');
             }
+            console.log('accessChat'.blue, { userId, req_user: req.user });
 
-            console.log('accessChat', { userId, req_user: req.user });
-            // tìm kiếm cuộc trò chuyện mà hai người dùng tham gia.
+            // tìm kiếm cuộc trò chuyện mà hai người dùng cùng tham gia not group.
             let isChat = await Chat.find({
                 isGroupChat: false,
                 $and: [
@@ -21,24 +21,32 @@ module.exports = {
             })
                 .populate('users', '-password')
                 .populate('latestMessage');
-            //kiểm tra xem isChat có chứa cuộc trò chuyện nào hay không
-            isChat = await User.populate(isChat, {
-                path: 'latestMessage.sender',
-                select: 'name picture email',
-            });
-            //Nếu có, bạn gửi cuộc trò chuyện đầu tiên trong danh sách  else
+
+            //trả về sender với name pic email từ isChat ở trên
+            if (isChat) {
+                isChat = await User.populate(isChat, {
+                    path: 'latestMessage.sender', //path: 'latestMessage.sender', Mongoose sẽ tìm kiếm trường "sender" trong trường "latestMessage" của đối tượng "isChat" và điền thông tin tương ứng vào đó.
+                    select: 'name picture email',
+                });
+            }
+
+            //nếu tồn tại conversation
             if (isChat.length > 0) {
                 res.send(isChat[0]);
-            } else {
+            }
+            //nếu không tồn tại conversation then create chat
+            else {
                 const createdChat = await Chat.create({
-                    chatName: 'sender', //user send
+                    chatName: 'Name of groupChat', //user send
                     isGroupChat: false,
                     users: [req.user._id, userId],
                 });
+
                 const FullChat = await Chat.findOne({ _id: createdChat._id }).populate(
                     'users',
                     '-password',
                 );
+                //trả về thông tin groupChat
                 res.status(200).json(FullChat);
             }
         } catch (error) {
@@ -61,38 +69,38 @@ module.exports = {
                     res.status(200).send(results);
                 });
         } catch (error) {
-            res.status(400);
-            throw new Error(error.message);
+            next(error);
         }
     },
     async createGroupChat(req, res, next) {
-        console.log(req.body);
-        if (!req.body.users || !req.body.name) {
-            return res.status(400).send({ message: 'Please Fill all the fields' });
-        }
-
-        var users = JSON.parse(req.body.users);
-        if (users.length < 2) {
-            return res.status(400).send('More than 2 users are required to form a group chat');
-        }
-        users.push(req.user); //list user in group chat
-
         try {
+            const adminUser = req.user; //người tạo group là myself <=> adminUser
+            const { users, name } = JSON.parse(req.body);
+            console.log('Create Group Chat'.green, { users, name });
+
+            if (!users || !name) {
+                return res.status(400).send({ message: 'Please Fill all the fields' });
+            }
+
+            if (users.length < 2) {
+                return res.status(400).send('More than 2 users are required to form a group chat');
+            }
+            users.push(adminUser);
+
             const groupChat = await Chat.create({
-                chatName: req.body.name,
+                chatName: name,
                 users: users,
                 isGroupChat: true,
-                groupAdmin: req.user,
+                groupAdmin: adminUser,
             });
 
             const fullGroupChat = await Chat.findOne({ _id: groupChat._id })
                 .populate('users', '-password')
                 .populate('groupAdmin', '-password');
-
             res.status(200).json(fullGroupChat);
+            //
         } catch (error) {
-            res.status(400);
-            throw new Error(error.message);
+            next(error);
         }
     },
     async renameGroup(req, res, next) {
@@ -111,8 +119,7 @@ module.exports = {
             .populate('groupAdmin', '-password');
 
         if (!updatedChat) {
-            res.status(404);
-            throw new Error('Chat Not Found');
+            next(CreateError.NotFound('Chat not found'));
         } else {
             res.json(updatedChat);
         }
@@ -133,8 +140,7 @@ module.exports = {
             .populate('groupAdmin', '-password');
 
         if (!added) {
-            res.status(404);
-            throw new Error('Chat Not Found');
+            next(CreateError.NotFound('Chat not found'));
         } else {
             res.json(added);
         }
@@ -155,8 +161,7 @@ module.exports = {
             .populate('groupAdmin', '-password');
 
         if (!removed) {
-            res.status(404);
-            throw new Error('Chat Not Found');
+            next(CreateError.NotFound('Chat not found'));
         } else {
             res.json(removed);
         }

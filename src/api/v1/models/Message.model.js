@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { connectChatAPP } = require('../configs/connections_multi_mongDB');
+const { connectChatAPP } = require('../../../configs/connections_multi_mongDB');
 
 const messageSchema = mongoose.Schema(
     {

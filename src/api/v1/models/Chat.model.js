@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const { connectChatAPP } = require('../configs/connections_multi_mongDB');
-const chatModel = mongoose.Schema(
+const { connectChatAPP } = require('../../../configs/connections_mongDB');
+const chatSchema = mongoose.Schema(
     {
         chatName: { type: String, trim: true },
         isGroupChat: { type: Boolean, default: false },
@@ -14,4 +14,4 @@ const chatModel = mongoose.Schema(
     { timestamps: true },
 );
 
-module.exports = connectChatAPP.model('Chat', chatModel);
+module.exports = connectChatAPP.model('Chat', chatSchema);

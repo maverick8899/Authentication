@@ -1,9 +1,8 @@
-const redis = require('redis');
-const client = redis.createClient({ port: 6379, host: '127.0.0.1', legacyMode: true });
-
-(async function connect() {
-    await client.connect();
-})();
+const Redis = require('ioredis');
+const client = new Redis({
+    host: 'localhost',
+    port: 6379,
+});
 
 client.ping((err, pong) => {
     console.log(pong);
